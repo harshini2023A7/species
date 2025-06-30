@@ -1,0 +1,29 @@
+def identify_pest(image):
+    # Dummy logic for pest identification
+    return {
+        "name": "Aphid",
+        "tips": "Use neem oil or insecticidal soap. Encourage ladybugs."
+    }
+
+def get_crop_prices(crop_name):
+    # Dummy price data (you can replace this with real API or scraping)
+    return {
+        "Location": ["Hyderabad", "Warangal", "Vijayawada"],
+        "Price (₹/quintal)": [1200, 1300, 1250]
+    }
+
+def get_health_tips(crop_name):
+    # Dummy health tips (can be extended with real data)
+    tips = {
+        "paddy": [
+            "Ensure good drainage in early stages.",
+            "Use nitrogen fertilizers wisely.",
+            "Regularly check for fungal diseases."
+        ],
+        "tomato": [
+            "Avoid overhead watering.",
+            "Rotate crops to prevent soil diseases.",
+            "Use mulch to retain soil moisture."
+        ]
+    }
+    return tips.get(crop_name.lower(), ["No tips available for this crop."])
