@@ -1,0 +1,26 @@
+import requests
+from bs4 import BeautifulSoup
+
+def get_species_info(query):
+    url = f"https://species.wikimedia.org/wiki/{query.replace(' ', '_')}"
+    try:
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, "html.parser")
+        content = soup.find("div", {"class": "mw-parser-output"})
+        if content:
+            paragraphs = content.find_all("p", limit=3)
+            return "\n".join([p.text.strip() for p in paragraphs if p.text.strip()])
+        return "Species data not found."
+    except Exception as e:
+        return f"Error fetching species info: {str(e)}"
+
+def get_commons_image(query):
+    search_url = f"https://commons.wikimedia.org/w/api.php?action=query&generator=images&titles={query}&prop=imageinfo&iiprop=url&format=json"
+    try:
+        response = requests.get(search_url).json()
+        pages = response.get("query", {}).get("pages", {})
+        for page in pages.values():
+            imageinfo = page.get("imageinfo", [{}])[0]
+            return imageinfo.get("url")
+    except Exception:
+        return None
